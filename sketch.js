@@ -1,5 +1,5 @@
-/* perspective simulation---fleet of cubes invading the earth-2025/04/26//2024/05/29, 
- * Yukio Otsu (Kyushu University),  
+/* perspective simulation---fleet of cubes invading the earth, 
+ * version 0.2, 2026/02/18, snow00two,
  * \href{https://creativecommons.org/licenses/by-nc-nd/4.0/}{\ccbyncsa}
  */
 const WIDTH_CANVAS = 1080  ; // 720x3/2 
