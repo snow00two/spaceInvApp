@@ -8,6 +8,8 @@ let radiusLarge = widthCanvas ;
 let centerY = widthCanvas/2 ;
 let centerZ = heightCanvas/2 ;
 const BACK_COLOR = [150, 200, 250] ;
+const PYRAMID_COLOR = [150,150, 150];
+const AMBIEND_COLOR = [100,100,100] ;
 const FLOOR_COLOR = [150, 200, 250] ;
 const FLOOR_COLOR_DARK = [10, 10, 10] ;
 const WHITE_COLOR = 250;
@@ -38,6 +40,10 @@ function setup() {
   } else {
       heightCanvas = windowHeight;
   };
+  radiusLarge = widthCanvas ;
+  centerY = widthCanvas/2 ;
+  centerZ = heightCanvas/2 ;
+
   selectMode = createSelect() ;
   selectMode.option('automatic', 'auto') ;
   selectMode.option('warp', 'warp') ; /* backward in black space */
@@ -246,9 +252,10 @@ function draw(){
  
     // define the camera coordinates from a camera on the helicopter
     // of the following coordinates in the world coordinates : 
-    let cameraX = cos(0.5 + i * 0.002)*250 ;
-    let cameraY = sin(0.5 + i * 0.002)*250;
-    let cameraZ = 200+sin(0.5 + i * 0.002)*30;
+    let speedCamera = 0.5 + i * 0.002;//in radian 
+    let cameraX = 250 * cos(speedCamera) ;
+    let cameraY = 250 * sin(speedCamera);
+    let cameraZ = 200 + 30 * sin(speedCamera);
     camera(cameraX,cameraY, cameraZ, 100, 0, 100, 0, 0, -1);
     // the output images are in the projection coordinates.
 
@@ -260,7 +267,7 @@ function draw(){
 
     stroke(0);
     strokeWeight(2);
-    fill(150,150, 150);
+    fill(PYRAMID_COLOR);
     pyramid(3);
 
     translate(-250,0,0);
@@ -270,7 +277,7 @@ function draw(){
     pyramid(1.5);
 
     ambientMaterial(125);
-    ambientLight(100,100,100);
+    ambientLight(AMBIEND_COLOR);
     shininess(100.0);
 
     translate(700, 200, max(500 - i * 0.3, 67) );
