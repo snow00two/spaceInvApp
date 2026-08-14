@@ -2,11 +2,11 @@
  * version 0.2, 2026/02/18, snow00two,
  * \href{https://creativecommons.org/licenses/by-nc-nd/4.0/}{\ccbyncsa}
  */
-const WIDTH_CANVAS = 1080  ; // 720x3/2 
-const HEIGHT_CANVAS = 607.5 ; // 405x3/2
-const RADIUS_LARGE = WIDTH_CANVAS ;
-const CENTER_Y = WIDTH_CANVAS/2 ;
-const CENTER_Z = HEIGHT_CANVAS/2 ;
+let widthCanvas = 1080  ; // 720x3/2 
+let heightCanvas = 607.5 ; // 405x3/2
+let radiusLarge = widthCanvas ;
+let centerY = widthCanvas/2 ;
+let centerZ = heightCanvas/2 ;
 const BACK_COLOR = [150, 200, 250] ;
 const FLOOR_COLOR = [150, 200, 250] ;
 const FLOOR_COLOR_DARK = [10, 10, 10] ;
@@ -32,6 +32,12 @@ let selectMode ;
 let autoMode ;
 
 function setup() {
+  widthCanvas = windowWidth ;
+  if ( windowHeight > widthCanvas ) {
+      heightCanvas = widthCanvas;
+  } else {
+      heightCanvas = windowHeight;
+  };
   selectMode = createSelect() ;
   selectMode.option('automatic', 'auto') ;
   selectMode.option('warp', 'warp') ; /* backward in black space */
@@ -39,7 +45,7 @@ function setup() {
   selectMode.option('interception', 'interception') ;/* fighters intercepting cubes */
   selectMode.option('landing','landing');/* fleet of cubes landing befor the great pylamid */
   selectMode.selected('auto') ;
-  selectMode.position(WIDTH_CANVAS - 140, 20) ;
+  selectMode.position(widthCanvas - 140, 20) ;
   selectMode.changed( resetBackground ) ;
   
   for (let j=0 ; j < J ; j++){//randome initial angles
@@ -55,7 +61,7 @@ function setup() {
     randL[j] = random(0,1);
   }
   autoMode = selectMode.value();
-  createCanvas(WIDTH_CANVAS, HEIGHT_CANVAS, WEBGL);
+  createCanvas(widthCanvas, heightCanvas, WEBGL);
   background(BACK_COLOR);
 }
 
@@ -136,8 +142,8 @@ function draw(){
         n = k - l + L + 1 ;// l=0 => l+L-1, l=L-1 =>n = k
       }
       let coordX = MAX_DISTANCE - S * (i + ( l - k ) * M ) ;
-      let coordZ = CENTER_Z + RADIUS_LARGE * sin(randAngle[ n ]);
-      let coordY = CENTER_Y + RADIUS_LARGE * cos(randAngle[ n ]) ;
+      let coordZ = centerZ + radiusLarge * sin(randAngle[ n ]);
+      let coordY = centerY + radiusLarge * cos(randAngle[ n ]) ;
       line(coordX,coordY,coordZ,coordX+LENGTH_LIGHT,coordY,coordZ);
     }
   } else if (currentMode == 'fleet'){
@@ -182,8 +188,8 @@ function draw(){
       }
       let coordX = MAX_DISTANCE - S * (i + ( l - k + (n % 5)) * M ) ;
       /* n % 5 is used to line straight  */
-      let coordZ = CENTER_Z + RADIUS_LARGE * sin(-0.5);
-      let coordY = CENTER_Y + 0.3*RADIUS_LARGE * ((n % 5) -3.6) ;
+      let coordZ = centerZ + radiusLarge * sin(-0.5);
+      let coordY = centerY + 0.3*radiusLarge * ((n % 5) -3.6) ;
       /* change -3.6 to correct positions */
       translate(coordX,coordY,coordZ);
       box(100);
@@ -224,9 +230,9 @@ function draw(){
         n = k - l + L + 1 ;// l=0 => l+L-1, l=L-1 =>n = k
       }
       let coordX = S * (i + ( l - k ) * M ) ;
-      let coordY = CENTER_Y + RADIUS_LARGE * cos(randAngle[ n ]) ;
-      let coordZ = CENTER_Z;
-      //CENTER_Z + RADIUS_LARGE * sin(randAngle[ n ]);
+      let coordY = centerY + radiusLarge * cos(randAngle[ n ]) ;
+      let coordZ = centerZ;
+      //centerZ + radiusLarge * sin(randAngle[ n ]);
       line(coordX,coordY,coordZ,coordX+LENGTH_LIGHT,coordY,coordZ);
     }
   } else if (currentMode == 'landing') {
